@@ -9,7 +9,13 @@ export const SCORING_CRITERIA: Record<string, ScoringCriterion[]> = {
     {
       key: 'crema_colour',
       label: 'Crema Colour',
-      descriptors: { 1: 'Very pale or none', 2: 'Pale', 3: 'Acceptable', 4: 'Rich amber', 5: 'Perfect tiger-stripe' },
+      descriptors: {
+        1: 'Very pale or none',
+        2: 'Pale',
+        3: 'Acceptable',
+        4: 'Rich amber',
+        5: 'Perfect tiger-stripe',
+      },
     },
     {
       key: 'extraction_volume',
@@ -26,17 +32,35 @@ export const SCORING_CRITERIA: Record<string, ScoringCriterion[]> = {
     {
       key: 'crema_colour',
       label: 'Crema Colour',
-      descriptors: { 1: 'Very pale or none', 2: 'Pale', 3: 'Acceptable', 4: 'Rich amber', 5: 'Perfect' },
+      descriptors: {
+        1: 'Very pale or none',
+        2: 'Pale',
+        3: 'Acceptable',
+        4: 'Rich amber',
+        5: 'Perfect',
+      },
     },
     {
       key: 'milk_texture',
       label: 'Milk Texture',
-      descriptors: { 1: 'Frothy / bubbly', 2: 'Too stiff', 3: 'Acceptable', 4: 'Silky', 5: 'Perfect microfoam' },
+      descriptors: {
+        1: 'Frothy / bubbly',
+        2: 'Too stiff',
+        3: 'Acceptable',
+        4: 'Silky',
+        5: 'Perfect microfoam',
+      },
     },
     {
       key: 'pour_symmetry',
       label: 'Pour Symmetry',
-      descriptors: { 1: 'No pattern', 2: 'Messy', 3: 'Recognisable', 4: 'Clean', 5: 'Symmetrical & sharp' },
+      descriptors: {
+        1: 'No pattern',
+        2: 'Messy',
+        3: 'Recognisable',
+        4: 'Clean',
+        5: 'Symmetrical & sharp',
+      },
     },
     {
       key: 'ratio_accuracy',
@@ -48,7 +72,13 @@ export const SCORING_CRITERIA: Record<string, ScoringCriterion[]> = {
     {
       key: 'milk_texture',
       label: 'Milk Texture',
-      descriptors: { 1: 'Wet / flat', 2: 'Too dry', 3: 'Acceptable', 4: 'Good body', 5: 'Perfect dry microfoam' },
+      descriptors: {
+        1: 'Wet / flat',
+        2: 'Too dry',
+        3: 'Acceptable',
+        4: 'Good body',
+        5: 'Perfect dry microfoam',
+      },
     },
     {
       key: 'foam_ratio',

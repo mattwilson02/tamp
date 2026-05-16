@@ -1,6 +1,6 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { Colors, Spacing } from '../../constants/tokens';
 
 type TabIconProps = {
@@ -9,13 +9,7 @@ type TabIconProps = {
 };
 
 function TabIcon({ name, focused }: TabIconProps) {
-  return (
-    <Ionicons
-      name={name}
-      size={24}
-      color={focused ? Colors.crema : Colors.textSecondary}
-    />
-  );
+  return <Ionicons name={name} size={24} color={focused ? Colors.crema : Colors.textSecondary} />;
 }
 
 function LogTabButton({ children, onPress }: { children: React.ReactNode; onPress?: () => void }) {
@@ -41,13 +35,17 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          tabBarIcon: ({ focused }) => <TabIcon name={focused ? 'home' : 'home-outline'} focused={focused} />,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon name={focused ? 'home' : 'home-outline'} focused={focused} />
+          ),
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
-          tabBarIcon: ({ focused }) => <TabIcon name={focused ? 'grid' : 'grid-outline'} focused={focused} />,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon name={focused ? 'grid' : 'grid-outline'} focused={focused} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -62,7 +60,9 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          tabBarIcon: ({ focused }) => <TabIcon name={focused ? 'person' : 'person-outline'} focused={focused} />,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon name={focused ? 'person' : 'person-outline'} focused={focused} />
+          ),
         }}
       />
     </Tabs>

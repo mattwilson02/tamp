@@ -1,21 +1,22 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.15/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": [
-      "node_modules",
-      "**/node_modules",
-      ".expo",
-      "**/.expo",
-      "dist",
-      "**/dist",
-      "build",
-      "**/build",
-      "prisma/migrations"
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/node_modules",
+      "!**/.expo",
+      "!**/.expo",
+      "!**/dist",
+      "!**/dist",
+      "!**/build",
+      "!**/build",
+      "!**/prisma/migrations"
     ]
   },
   "formatter": {
@@ -42,11 +43,14 @@
       "quoteStyle": "single",
       "trailingCommas": "es5",
       "semicolons": "always"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
     }
   },
   "overrides": [
     {
-      "include": ["apps/mobile/**"],
+      "includes": ["**/apps/mobile/**"],
       "linter": {
         "rules": {
           "correctness": {

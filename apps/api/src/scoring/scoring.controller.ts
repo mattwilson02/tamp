@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ScoringService } from './scoring.service';
+import type { ScoringService } from './scoring.service';
 
 @Controller('scoring')
 export class ScoringController {
@@ -13,7 +13,7 @@ export class ScoringController {
   @Post('attempts/:attemptId')
   score(
     @Param('attemptId') attemptId: string,
-    @Body() body: { scores: { criterionKey: string; score: number }[] },
+    @Body() body: { scores: { criterionKey: string; score: number }[] }
   ) {
     // TODO: extract scorerId from session
     return this.scoringService.submitScore('current-user-id', attemptId, body.scores);

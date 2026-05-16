@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { FeedService } from './feed.service';
+import type { FeedService } from './feed.service';
 
 @Controller('feed')
 export class FeedController {
@@ -8,7 +8,11 @@ export class FeedController {
   @Get()
   following(@Query('cursor') cursor?: string, @Query('limit') limit?: string) {
     // TODO: extract userId from session
-    return this.feedService.getFollowingFeed('current-user-id', cursor, limit ? Number(limit) : undefined);
+    return this.feedService.getFollowingFeed(
+      'current-user-id',
+      cursor,
+      limit ? Number(limit) : undefined
+    );
   }
 
   @Get('discover')

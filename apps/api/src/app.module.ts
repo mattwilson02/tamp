@@ -1,20 +1,21 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { validateEnv } from './config/env';
-import { PrismaModule } from './prisma/prisma.module';
-import { HealthModule } from './health/health.module';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
-import { DrinksModule } from './drinks/drinks.module';
 import { AttemptsModule } from './attempts/attempts.module';
+import { AuthModule } from './auth/auth.module';
+import { validateEnv } from './config/env';
+import { DrinksModule } from './drinks/drinks.module';
 import { FeedModule } from './feed/feed.module';
+import { HealthModule } from './health/health.module';
+import { PrismaModule } from './prisma/prisma.module';
 import { ScoringModule } from './scoring/scoring.module';
 import { StorageModule } from './storage/storage.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '../../.env' }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '../../.env', validate: validateEnv }),
     PrismaModule,
+    HealthModule,
     AuthModule,
     UsersModule,
     DrinksModule,

@@ -1,15 +1,14 @@
 import 'reflect-metadata';
+import multipart from '@fastify/multipart';
 import { NestFactory } from '@nestjs/core';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
+import { FastifyAdapter, type NestFastifyApplication } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
+import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter({ logger: process.env.NODE_ENV === 'development' }),
+    new FastifyAdapter({ logger: process.env.NODE_ENV === 'development' })
   );
 
   app.enableCors({
@@ -17,7 +16,10 @@ async function bootstrap() {
     credentials: true,
   });
 
+  await app.register(multipart);
+
   app.setGlobalPrefix('api');
+  app.useGlobalFilters(new GlobalExceptionFilter());
 
   const port = process.env.PORT ?? 3000;
   await app.listen(port, '0.0.0.0');

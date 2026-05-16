@@ -1,5 +1,5 @@
-import { Injectable, ConflictException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { ConflictException, Injectable } from '@nestjs/common';
+import type { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class ScoringService {
@@ -8,7 +8,7 @@ export class ScoringService {
   async submitScore(
     scorerId: string,
     attemptId: string,
-    scores: { criterionKey: string; score: number }[],
+    scores: { criterionKey: string; score: number }[]
   ) {
     const existing = await this.prisma.score.findFirst({
       where: { scorerId, attemptId },

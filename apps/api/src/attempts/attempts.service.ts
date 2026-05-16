@@ -1,19 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import type { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AttemptsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(userId: string, dto: {
-    drinkId: string;
-    photoUrls: string[];
-    notes?: string;
-    grindSetting?: string;
-    doseGrams?: number;
-    yieldGrams?: number;
-    isPublic?: boolean;
-  }) {
+  create(
+    userId: string,
+    dto: {
+      drinkId: string;
+      photoUrls: string[];
+      notes?: string;
+      grindSetting?: string;
+      doseGrams?: number;
+      yieldGrams?: number;
+      isPublic?: boolean;
+    }
+  ) {
     return this.prisma.attempt.create({
       data: {
         userId,

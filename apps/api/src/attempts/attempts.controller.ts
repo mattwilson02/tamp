@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { AttemptsService } from './attempts.service';
+import type { AttemptsService } from './attempts.service';
 
 @Controller('attempts')
 export class AttemptsController {

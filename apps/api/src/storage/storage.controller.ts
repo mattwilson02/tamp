@@ -1,6 +1,6 @@
 import { Controller, Post, Req } from '@nestjs/common';
-import { FastifyRequest } from 'fastify';
-import { StorageService } from './storage.service';
+import type { FastifyRequest } from 'fastify';
+import type { StorageService } from './storage.service';
 
 @Controller('storage')
 export class StorageController {
@@ -14,7 +14,7 @@ export class StorageController {
     const url = await this.storageService.uploadAttemptPhoto(
       'current-user-id', // TODO: from session
       buffer,
-      data.mimetype,
+      data.mimetype
     );
     return { url };
   }
