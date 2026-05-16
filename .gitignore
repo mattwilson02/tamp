@@ -1,0 +1,14 @@
+node_modules/
+.env
+.env.local
+.env*.local
+dist/
+build/
+.expo/
+*.log
+.DS_Store
+coverage/
+prisma/migrations/dev/
+apps/mobile/.expo/
+apps/api/dist/
+*.tsbuildinfo

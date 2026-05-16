@@ -1,0 +1,186 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Better Auth tables ──────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  sessions  Session[]
+  accounts  Account[]
+  profile   UserProfile?
+  attempts  Attempt[]
+  follows   Follow[]       @relation("follower")
+  followers Follow[]       @relation("following")
+  likes     Like[]
+  comments  Comment[]
+  scores    Score[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  idToken               String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, accountId])
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// ─── App domain ──────────────────────────────────────────────────────────────
+
+model UserProfile {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  username     String   @unique
+  displayName  String
+  isPublic     Boolean  @default(true)
+  xp           Int      @default(0)
+  rank         Int      @default(0)
+  totalAttempts Int     @default(0)
+  lastStreakAt DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Follow {
+  followerId  String
+  followingId String
+  createdAt   DateTime @default(now())
+
+  follower  User @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
+}
+
+model Drink {
+  id                    String   @id @default(cuid())
+  name                  String
+  slug                  String   @unique
+  category              String
+  description           String
+  longDescription       String   @default("")
+  difficultyRank        Int      @default(0)
+  hasInteractiveWorkflow Boolean @default(false)
+  thumbnailUrl          String?
+
+  // Spec stored as JSON for flexibility
+  spec Json
+
+  attempts Attempt[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Attempt {
+  id             String   @id @default(cuid())
+  userId         String
+  drinkId        String
+  photoUrls      String[]
+  notes          String?
+  grindSetting   String?
+  doseGrams      Float?
+  yieldGrams     Float?
+  isPublic       Boolean  @default(true)
+  communityScore Float?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  drink    Drink     @relation(fields: [drinkId], references: [id])
+  likes    Like[]
+  comments Comment[]
+  scores   Score[]
+}
+
+model Like {
+  userId    String
+  attemptId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  attempt Attempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+
+  @@id([userId, attemptId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  userId    String
+  attemptId String
+  body      String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  attempt Attempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+}
+
+model Score {
+  id        String   @id @default(cuid())
+  scorerId  String
+  attemptId String
+  createdAt DateTime @default(now())
+
+  scorer   User            @relation(fields: [scorerId], references: [id], onDelete: Cascade)
+  attempt  Attempt         @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  criteria ScoreCriterion[]
+
+  @@unique([scorerId, attemptId])
+}
+
+model ScoreCriterion {
+  id           String @id @default(cuid())
+  scoreId      String
+  criterionKey String
+  value        Int    // 1–5
+
+  score Score @relation(fields: [scoreId], references: [id], onDelete: Cascade)
+}
