@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import { Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Platform, Pressable, type PressableProps, StyleSheet, View } from 'react-native';
 import { Colors, Spacing } from '../../constants/tokens';
 
 type TabIconProps = {
@@ -12,7 +12,13 @@ function TabIcon({ name, focused }: TabIconProps) {
   return <Ionicons name={name} size={24} color={focused ? Colors.crema : Colors.textSecondary} />;
 }
 
-function LogTabButton({ children, onPress }: { children: React.ReactNode; onPress?: () => void }) {
+function LogTabButton({
+  children,
+  onPress,
+}: {
+  children: React.ReactNode;
+  onPress?: PressableProps['onPress'];
+}) {
   return (
     <Pressable onPress={onPress} style={styles.logButton}>
       <View style={styles.logButtonInner}>{children}</View>

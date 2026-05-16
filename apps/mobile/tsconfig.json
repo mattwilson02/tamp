@@ -12,5 +12,6 @@
     ".expo/types/**/*.d.ts",
     "expo-env.d.ts",
     ".expo/types/**/*.ts"
-  ]
+  ],
+  "exclude": ["node_modules", "__tests__", "jest.config.ts"]
 }
