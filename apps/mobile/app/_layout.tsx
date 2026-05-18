@@ -4,12 +4,15 @@ import {
   PlayfairDisplay_700Bold,
   PlayfairDisplay_700Bold_Italic,
 } from '@expo-google-fonts/playfair-display';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { Colors } from '../constants/tokens';
+
+const queryClient = new QueryClient();
 
 SplashScreen.preventAutoHideAsync();
 
@@ -35,12 +38,12 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <StatusBar style="dark" backgroundColor={Colors.background} />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="+not-found" />
       </Stack>
-    </>
+    </QueryClientProvider>
   );
 }

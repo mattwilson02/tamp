@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import type { DrinksService } from './drinks.service';
 
 @Controller('drinks')
@@ -6,8 +6,8 @@ export class DrinksController {
   constructor(private readonly drinksService: DrinksService) {}
 
   @Get()
-  findAll() {
-    return this.drinksService.findAll();
+  findAll(@Query('category') category?: string) {
+    return this.drinksService.findAll(category);
   }
 
   @Get(':slug')
